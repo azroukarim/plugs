@@ -29,6 +29,7 @@ if wget -q --no-check-certificate "$URL" -O "$TMP_DIR/starplay.tar.gz"; then
 
     if [ -d "$TMP_DIR/$EXTRACTED_DIR" ]; then
         echo "> Installing to $PLUGINS_PATH ..."
+        rm -rf "$PLUGINS_PATH/$EXTRACTED_DIR"
         mkdir -p "$PLUGINS_PATH"
         cp -rf "$TMP_DIR/$EXTRACTED_DIR" "$PLUGINS_PATH/"
     fi
