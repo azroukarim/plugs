@@ -1,28 +1,54 @@
-#!/bin/sh
-echo "================================================="
-echo "   StarPlay Enigma2 Plugin Auto Installer        "
-echo "================================================="
-echo "Downloading latest version from GitHub..."
+#!/bin/bash
 
-wget -qO /tmp/starplay.zip "https://github.com/azroukarim/plugs/archive/refs/heads/main.zip"
-if [ $? -ne 0 ]; then
-    echo "Download failed! Please check your internet connection."
-    exit 1
+URL="https://github.com/azroukarim/plugs/raw/refs/heads/main/starplay.tar.gz"
+TMP_DIR="/tmp"
+PLUGINS_PATH="/usr/lib/enigma2/python/Plugins/Extensions"
+
+clear > /dev/null 2>&1
+
+# Check and install wget
+package="wget"
+if ! opkg list-installed | grep -q "^$package"; then
+    if [ -f /etc/apt/apt.conf ]; then
+        apt-get update >/dev/null 2>&1
+        apt install $package -y >/dev/null 2>&1
+    else
+        opkg update > /dev/null 2>&1
+        opkg install $package >/dev/null 2>&1
+    fi
 fi
 
-echo "Extracting files..."
-unzip -qo /tmp/starplay.zip -d /tmp/
+# Download archive
+echo "> Downloading StarPlay ..."
+if wget -q --no-check-certificate "$URL" -O "$TMP_DIR/starplay.tar.gz"; then
+    echo "> Extracting ..."
+    tar -xzf "$TMP_DIR/starplay.tar.gz" -C "$TMP_DIR"
 
-echo "Installing to /usr/lib/enigma2/python/Plugins/Extensions/StarPlay..."
-rm -rf /usr/lib/enigma2/python/Plugins/Extensions/StarPlay
-mkdir -p /usr/lib/enigma2/python/Plugins/Extensions/StarPlay
-cp -r /tmp/plugs-main/starplay/* /usr/lib/enigma2/python/Plugins/Extensions/StarPlay/
+    # Find extracted folder
+    EXTRACTED_DIR=$(tar -tzf "$TMP_DIR/starplay.tar.gz" | head -1 | cut -d'/' -f1)
 
-echo "Cleaning up temporary files..."
-rm -rf /tmp/starplay.zip /tmp/plugs-main
+    if [ -d "$TMP_DIR/$EXTRACTED_DIR" ]; then
+        echo "> Installing to $PLUGINS_PATH ..."
+        mkdir -p "$PLUGINS_PATH"
+        cp -rf "$TMP_DIR/$EXTRACTED_DIR" "$PLUGINS_PATH/"
+    fi
 
-echo "Installation successful! The system will now restart."
-echo "Restarting Enigma2 GUI..."
-sleep 2
-killall -9 enigma2
-exit 0
+    # Cleanup
+    echo "> Cleaning up ..."
+    rm -rf "$TMP_DIR/starplay.tar.gz" "$TMP_DIR/$EXTRACTED_DIR"
+
+    # Restart
+    echo "> Restarting ..."
+    if command -v killall &> /dev/null; then
+        killall -9 enigma2
+    elif command -v init &> /dev/null; then
+        init 4
+        sleep 2
+        init 3
+    else
+        reboot
+    fi
+else
+    echo "> Download failed. Check your internet connection."
+    exit 1
+fi
