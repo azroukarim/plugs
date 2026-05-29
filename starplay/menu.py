@@ -86,7 +86,7 @@ class StarPlayMainMenu(Screen):
         self.session.open(StarPlayGridScreen, media_type)
 
     def checkForUpdates(self):
-        url = b"https://raw.githubusercontent.com/azroukarim/plugs/main/version.json"
+        url = b"https://raw.githubusercontent.com/azroukarim/plugs/main/starplay/version.json"
         getPage(url).addCallback(self.onUpdateChecked).addErrback(self.onUpdateError)
         
     def onUpdateChecked(self, data):
@@ -106,3 +106,4 @@ class StarPlayMainMenu(Screen):
     def openUpdate(self):
         if self.update_data:
             self.session.open(StarPlayUpdateScreen, self.update_data.get("version"), self.update_data.get("changelog", "No details"))
+
