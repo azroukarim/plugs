@@ -47,6 +47,8 @@ install_pkg "wget"
 install_pkg "gstreamer1.0"
 install_pkg "gstreamer1.0-plugins-base"
 install_pkg "gstreamer1.0-plugins-good"
+install_pkg "enigma2-plugin-systemplugins-serviceapp"
+install_pkg "exteplayer3"
 
 echo -e "\n${B}[*] ${W}Downloading StarPlay Archive...${NC}"
 if wget -q --no-check-certificate "$URL" -O "$TMP_DIR/starplay.tar.gz"; then
