@@ -112,16 +112,8 @@ class StarPlayMainMenu(Screen):
             info = json.loads(data_str)
             remote_version = info.get("version", "1.0")
             if remote_version != self.local_version:
-                # Basic comparison assuming format X.Y
-                try:
-                    if float(remote_version) > float(self.local_version):
-                        self.update_data = info
-                        self["key_yellow"].setText(_("Update Available"))
-                except ValueError:
-                    # Fallback to string comparison
-                    if remote_version > self.local_version:
-                        self.update_data = info
-                        self["key_yellow"].setText(_("Update Available"))
+                self.update_data = info
+                self["key_yellow"].setText(_("Update Available"))
         except Exception as e:
             print(f"[StarPlay] Error parsing version.json: {e}")
             
