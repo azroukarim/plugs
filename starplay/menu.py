@@ -4,6 +4,7 @@ from Components.Label import Label
 from enigma import eSize, ePoint
 from twisted.web.client import getPage
 import json
+import os
 from .ui import StarPlayGridScreen
 from .__init__ import __version__
 from .update import StarPlayUpdateScreen
@@ -34,7 +35,17 @@ class StarPlayMainMenu(Screen):
         Screen.__init__(self, session)
         self.session = session
         
-        self["title"] = Label(_(f"StarPlay v{__version__} - Select Category"))
+        self.local_version = __version__
+        try:
+            version_file = os.path.join(os.path.dirname(__file__), 'version.json')
+            if os.path.exists(version_file):
+                with open(version_file, 'r') as f:
+                    local_info = json.load(f)
+                    self.local_version = local_info.get("version", __version__)
+        except Exception as e:
+            print(f"[StarPlay] Error reading local version.json: {e}")
+        
+        self["title"] = Label(_(f"StarPlay v{self.local_version} - Select Category"))
         self["selector"] = Label("")
         
         self["btn_movies_bg"] = Label("")
@@ -94,9 +105,17 @@ class StarPlayMainMenu(Screen):
             data_str = data.decode('utf-8') if isinstance(data, bytes) else data
             info = json.loads(data_str)
             remote_version = info.get("version", "1.0")
-            if remote_version != __version__:
-                self.update_data = info
-                self["key_yellow"].setText(_("Update Available"))
+            if remote_version != self.local_version:
+                # Basic comparison assuming format X.Y
+                try:
+                    if float(remote_version) > float(self.local_version):
+                        self.update_data = info
+                        self["key_yellow"].setText(_("Update Available"))
+                except ValueError:
+                    # Fallback to string comparison
+                    if remote_version > self.local_version:
+                        self.update_data = info
+                        self["key_yellow"].setText(_("Update Available"))
         except Exception as e:
             print(f"[StarPlay] Error parsing version.json: {e}")
             
