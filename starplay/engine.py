@@ -192,9 +192,9 @@ def play_magnet(session, magnet, title, imdb_id=None):
                     color = "#FFFFFF"
                 
                 self.skin = f"""
-                    <screen position="0,650" size="1920,200" flags="wfNoBorder" backgroundColor="transparent" zPosition="10">
+                    <screen position="0,750" size="1920,250" flags="wfNoBorder" backgroundColor="#ff000000" zPosition="-1">
                         <widget name="subdelay" position="10,0" size="1900,40" font="Regular;35" halign="left" valign="top" foregroundColor="#FFFF00" backgroundColor="#000000" transparent="1" shadowColor="#000000" shadowOffset="-2,-2" />
-                        <widget name="subtext" position="10,40" size="1900,160" font="Regular;55" halign="center" valign="bottom" foregroundColor="{color}" backgroundColor="#000000" transparent="1" shadowColor="#000000" shadowOffset="-3,-3" />
+                        <widget name="subtext" position="10,40" size="1900,200" font="Regular;55" halign="center" valign="bottom" foregroundColor="{color}" backgroundColor="#000000" transparent="1" shadowColor="#000000" shadowOffset="-3,-3" />
                     </screen>
                 """
                 Screen.__init__(self, session)
