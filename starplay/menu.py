@@ -2,7 +2,7 @@ from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from enigma import eSize, ePoint
-from twisted.web.client import getPage
+from twisted.internet import threads
 import json
 import os
 from .ui import StarPlayGridScreen
@@ -95,8 +95,6 @@ class StarPlayMainMenu(Screen):
     def openGrid(self):
         media_type = "movie" if self.current_idx == 0 else "tv"
         self.session.open(StarPlayGridScreen, media_type)
-
-from twisted.internet import threads
 
     def checkForUpdates(self):
         threads.deferToThread(self.fetchVersionSync).addCallback(self.onUpdateChecked).addErrback(self.onUpdateError)
