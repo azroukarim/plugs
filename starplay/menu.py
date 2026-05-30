@@ -96,9 +96,17 @@ class StarPlayMainMenu(Screen):
         media_type = "movie" if self.current_idx == 0 else "tv"
         self.session.open(StarPlayGridScreen, media_type)
 
+from twisted.internet import threads
+
     def checkForUpdates(self):
-        url = b"https://raw.githubusercontent.com/azroukarim/plugs/main/starplay/version.json"
-        getPage(url).addCallback(self.onUpdateChecked).addErrback(self.onUpdateError)
+        threads.deferToThread(self.fetchVersionSync).addCallback(self.onUpdateChecked).addErrback(self.onUpdateError)
+        
+    def fetchVersionSync(self):
+        cmd = 'wget -qO- --no-check-certificate "https://raw.githubusercontent.com/azroukarim/plugs/refs/heads/main/starplay/version.json"'
+        try:
+            return os.popen(cmd).read()
+        except Exception:
+            return "{}"
         
     def onUpdateChecked(self, data):
         try:
