@@ -110,8 +110,10 @@ class StarPlayMainMenu(Screen):
         try:
             data_str = data.decode('utf-8') if isinstance(data, bytes) else data
             info = json.loads(data_str)
-            remote_version = info.get("version", "1.0")
-            if remote_version != self.local_version:
+            remote_version = str(info.get("version", "1.0")).strip()
+            local_version_safe = str(self.local_version).strip()
+            
+            if remote_version != local_version_safe:
                 self.update_data = info
                 self["key_yellow"].setText(_("Update Available"))
         except Exception as e:
