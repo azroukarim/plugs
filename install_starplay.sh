@@ -30,13 +30,6 @@ echo -e "${W}===================================================================
 echo -e "${Y}                 StarPlay Plugin Installer                             ${NC}"
 echo -e "${W}=======================================================================${NC}\n"
 
-echo -e "${B}[*] ${W}Updating packages list (opkg update)...${NC}"
-opkg update >/dev/null 2>&1
-echo -e "${G}[+] Update complete.${NC}\n"
-
-echo -e "${B}[*] ${W}Upgrading packages (opkg upgrade) - This might take a while...${NC}"
-opkg upgrade >/dev/null 2>&1
-echo -e "${G}[+] Upgrade complete.${NC}\n"
 
 echo -e "${B}[*] ${W}Checking for required dependencies...${NC}"
 
