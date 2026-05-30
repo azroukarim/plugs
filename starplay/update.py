@@ -5,12 +5,12 @@ from enigma import eConsoleAppContainer
 
 class StarPlayUpdateScreen(Screen):
     skin = """
-    <screen position="center,center" size="1000,600" title="StarPlay Update Available" backgroundColor="#101010" flags="wfNoBorder">
-        <widget name="title" position="0,20" size="1000,60" font="Regular;40" halign="center" valign="center" foregroundColor="#ffffff" transparent="1" />
-        <widget name="changelog" position="50,100" size="900,380" font="Regular;28" halign="left" valign="top" foregroundColor="#cccccc" transparent="1" />
+    <screen position="0,0" size="1920,1080" title="StarPlay Update Available" backgroundColor="#101010" flags="wfNoBorder">
+        <widget name="title" position="0,100" size="1920,80" font="Regular;60" halign="center" valign="center" foregroundColor="#ffffff" transparent="1" />
+        <widget name="changelog" position="200,250" size="1520,600" font="Regular;40" halign="left" valign="top" foregroundColor="#cccccc" transparent="1" />
         
-        <widget name="key_red" position="200,520" zPosition="1" size="250,50" font="Regular;30" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-        <widget name="key_green" position="550,520" zPosition="1" size="250,50" font="Regular;30" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+        <widget name="key_red" position="300,950" zPosition="1" size="400,70" font="Regular;40" halign="center" valign="center" backgroundColor="#9f1313" foregroundColor="#ffffff" transparent="0" />
+        <widget name="key_green" position="1220,950" zPosition="1" size="400,70" font="Regular;40" halign="center" valign="center" backgroundColor="#1f771f" foregroundColor="#ffffff" transparent="0" />
     </screen>
     """
 
