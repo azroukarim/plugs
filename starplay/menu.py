@@ -8,6 +8,7 @@ import os
 from .ui import StarPlayGridScreen
 from .__init__ import __version__
 from .update import StarPlayUpdateScreen
+from .settings import StarPlaySettingsScreen
 
 class StarPlayMainMenu(Screen):
     skin = """
@@ -28,6 +29,7 @@ class StarPlayMainMenu(Screen):
         <widget name="key_red" position="100,980" zPosition="1" size="200,50" font="Regular;30" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
         <widget name="key_green" position="350,980" zPosition="1" size="200,50" font="Regular;30" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
         <widget name="key_yellow" position="600,980" zPosition="1" size="250,50" font="Regular;30" halign="center" valign="center" backgroundColor="#d1c000" transparent="1" />
+        <widget name="key_blue" position="900,980" zPosition="1" size="200,50" font="Regular;30" halign="center" valign="center" backgroundColor="#1f1f9f" transparent="1" />
     </screen>
     """
 
@@ -57,6 +59,7 @@ class StarPlayMainMenu(Screen):
         self["key_red"] = Label(_("Close"))
         self["key_green"] = Label(_("Select"))
         self["key_yellow"] = Label("")
+        self["key_blue"] = Label(_("Settings"))
         
         # 0 = Movies, 1 = Series
         self.current_idx = 0
@@ -69,6 +72,7 @@ class StarPlayMainMenu(Screen):
             "red": self.close,
             "green": self.openGrid,
             "yellow": self.openUpdate,
+            "blue": self.openSettings,
             "left": self.moveLeft,
             "right": self.moveRight
         }, -1)
@@ -95,6 +99,9 @@ class StarPlayMainMenu(Screen):
     def openGrid(self):
         media_type = "movie" if self.current_idx == 0 else "tv"
         self.session.open(StarPlayGridScreen, media_type)
+
+    def openSettings(self):
+        self.session.open(StarPlaySettingsScreen)
 
     def checkForUpdates(self):
         threads.deferToThread(self.fetchVersionSync).addCallback(self.onUpdateChecked).addErrback(self.onUpdateError)
