@@ -66,9 +66,10 @@ if wget -q --no-check-certificate "$URL" -O "$TMP_DIR/starplay.tar.gz"; then
 
     if [ -d "$TMP_DIR/$EXTRACTED_DIR" ]; then
         echo -e "${B}[*] ${W}Installing to Enigma2 Plugins directory...${NC}"
-        rm -rf "$PLUGINS_PATH/$EXTRACTED_DIR"
+        rm -rf "$PLUGINS_PATH/StarPlay"
+        rm -rf "$PLUGINS_PATH/starplay"
         mkdir -p "$PLUGINS_PATH"
-        cp -rf "$TMP_DIR/$EXTRACTED_DIR" "$PLUGINS_PATH/"
+        cp -rf "$TMP_DIR/$EXTRACTED_DIR" "$PLUGINS_PATH/StarPlay"
     fi
 
     echo -e "${B}[*] ${W}Cleaning up temporary files...${NC}"
