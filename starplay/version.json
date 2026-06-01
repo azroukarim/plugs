@@ -1,4 +1,5 @@
 {
-  "version": "3.0",
-  "changelog": "- Initial release\n- auther"
+  "version_actuel": "v3.0",
+  "new_version": "v3.1",
+  "changelog": "- Smart series links fetching algorithm\n- Fixed audio track and subtitle freezing issue\n- Added automatic smart update system\n- Improved overall performance and speed"
 }
