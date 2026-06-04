@@ -7,7 +7,7 @@ https://github.com/azroukarim/plugs/raw/refs/heads/main/enigma2-plugin-extension
 https://raw.githubusercontent.com/azroukarim/plugs/refs/heads/main/install_starplay.sh
 
 
-### ➤ OpenATV7.5
+### ➤ starplay
 ```bash
 wget -q "--no-check-certificate" https://raw.githubusercontent.com/azroukarim/plugs/refs/heads/main/install_starplay.sh -O - | /bin/sh
 ```
